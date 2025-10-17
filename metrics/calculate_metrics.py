@@ -62,9 +62,9 @@ def main():
             false_positives += len(detected_rules)
 
     print("\n--- Detection Metrics ---")
-    print(f"✅ True Positives (TP):  {true_positives}")
-    print(f"❌ False Positives (FP): {false_positives}")
-    print(f"👻 False Negatives (FN): {false_negatives}")
+    print(f" True Positives (TP):  {true_positives}")
+    print(f" False Positives (FP): {false_positives}")
+    print(f" False Negatives (FN): {false_negatives}")
     print("-------------------------")
 
 if __name__ == "__main__":
