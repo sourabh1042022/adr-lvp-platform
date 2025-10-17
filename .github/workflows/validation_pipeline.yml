@@ -1,0 +1,54 @@
+name: Rule Validation Pipeline
+
+# This workflow runs on every push to the 'main' branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-rules:
+    # The type of virtual machine to run the job on
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out the repository code
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Python environment
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: Install Python dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install PyYAML
+
+    # Step 3: Run the Linter on all rules
+    - name: Run Linter
+      run: |
+        source venv/bin/activate
+        for rule in rules/sigma/*.yml; do
+          echo "Linting $rule"
+          python linter/main.py "$rule"
+        done
+
+    # Step 4: Set up Rust environment
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+    - name: Build Replayer
+      run: cargo build --release --manifest-path replayer/Cargo.toml
+
+    # Step 5: Run the Replayer & Metrics Pipeline
+    - name: Run Replayer and Calculate Metrics
+      run: |
+        # First, generate the test data
+        python3 datagen/generate_logs.py
+        # Now run the full pipeline
+        ./replayer/target/release/replayer ./rules/sigma/ ./datagen/events.jsonl | python3 metrics/calculate_metrics.py ./datagen/labels.csv
