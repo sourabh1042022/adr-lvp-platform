@@ -1,6 +1,6 @@
 # Automated Detection Rule Lifecycle & Validation Platform (ADR-LVP)
 
-![CI Pipeline](https://github.com/YOUR_USERNAME/adr-lvp-platform/actions/workflows/validation_pipeline.yml/badge.svg)
+![CI Pipeline](https://github.com/sourabh1042022/adr-lvp-platform/actions/workflows/validation_pipeline.yml/badge.svg)
 
 ADR-LVP is a production-grade, polyglot CI/CD platform designed to automate the entire lifecycle of security detection rules. It addresses the critical challenges of false positives, performance degradation, and lack of governance in traditional SOC environments by treating detection logic as mission-critical software.
 
