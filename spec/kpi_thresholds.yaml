@@ -1,0 +1,20 @@
+# spec/kpi_thresholds.yaml
+# Defines the pass/fail criteria for automated rule validation.
+
+# --- Effectiveness Gates ---
+# Maximum allowed False Positive (FP) rate during synthetic testing.
+# 5% is a strict but good starting point.
+fp_rate_max: 0.05
+
+# --- Performance Gates ---
+# Maximum 95th percentile evaluation latency per 1000 events.
+# This ensures the rule is fast even on outlier events.
+p95_latency_ms_max: 50
+
+# Maximum average CPU usage percentage a rule can consume during a benchmark.
+cpu_percent_max: 10.0
+
+# --- Release Safety Gates ---
+# The maximum allowable increase in FP rate compared to the last stable version.
+# If a new version's FP rate is old_fp + 0.02, trigger a rollback.
+fp_regression_threshold: 0.02

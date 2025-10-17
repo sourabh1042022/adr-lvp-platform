@@ -1,0 +1,37 @@
+# spec/rule_schema.yaml
+# Defines the mandatory and optional fields for every detection rule.
+
+title: string # A human-readable title for the rule. e.g., "Suspicious PowerShell Download Cradle"
+id: uuid # A unique identifier for the rule.
+status: enum(stable, experimental, deprecated) # The maturity of the rule.
+description: string # A detailed explanation of what the rule detects and why.
+
+author: string # Name or team who created the rule.
+date: date # Creation date.
+modified: date # Last modification date.
+
+logsource:
+  category: string # Broad log category. e.g., "process_creation", "network_connection", "firewall"
+  product: string # The product generating the log. e.g., "windows", "zeek", "osquery"
+  service: string # The specific service or log channel. e.g., "security", "sysmon"
+
+detection:
+  # The core logic of the rule, often using a condition.
+  # Fields here map directly to fields in the log source.
+  # Example: selection, filter, condition. The structure is flexible.
+  selection: map
+  filter: map
+  condition: string
+
+falsepositives:
+  - string # A list of known legitimate scenarios that might trigger this rule.
+
+level: enum(informational, low, medium, high, critical) # The severity of the detected event.
+
+tags:
+  # MITRE ATT&CK or other classification tags.
+  - string # e.g., "attack.execution", "attack.t1059.001"
+
+references:
+  # Links to external articles or threat reports.
+  - string
