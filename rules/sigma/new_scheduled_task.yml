@@ -1,22 +1,24 @@
 title: New Scheduled Task Creation
 id: 1b2c3d4e-5f6a-7b8c-9d0e-1f2a3b4c5d6e
 status: experimental
-description: Detects creation of a new scheduled task.
-author: Your Name <your.email@example.com>
-date: 2025/10/17
-modified: 2025/10/17
+description: Detect creation of a scheduled task on Windows (Event ID 4698). This can indicate persistence / scheduled job creation by an attacker or automation.
+author: sourabh1042022
+date: 2025-10-17
+modified: 2025-10-17
+references:
+  - https://attack.mitre.org/techniques/T1053/
+  - https://learn.microsoft.com/windows/security/threat-protection/auditing/event-4698
 logsource:
-  category: process_creation
   product: windows
+  service: security
 detection:
   selection:
     EventID: 4698
   condition: selection
 falsepositives:
-  - Legitimate scheduled task creation
+  - System/administrator created scheduled tasks (deployment, patching, automation).
+  - Monitoring/tools that create scheduled tasks as part of normal operations.
 level: medium
 tags:
-  - attack.persistence
   - attack.t1053
-references:
-  - https://attack.mitre.org/techniques/T1053/
+  - attack.persistence
