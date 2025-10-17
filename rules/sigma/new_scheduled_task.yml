@@ -1,22 +1,22 @@
 title: New Scheduled Task Creation
 id: 1b2c3d4e-5f6a-7b8c-9d0e-1f2a3b4c5d6e
 status: experimental
-description: Detects the creation of a new scheduled task using the native schtasks.exe utility.
-author: Gardiyan Labs
-date: 2025-10-17
-modified: 2025-10-17
+description: Detects creation of a new scheduled task.
+author: Your Name <your.email@example.com>
+date: 2025/10/17
+modified: 2025/10/17
 logsource:
   category: process_creation
   product: windows
 detection:
   selection:
-    Image|endswith: '\schtasks.exe'
-    CommandLine|contains: '/create'
+    EventID: 4698
   condition: selection
 falsepositives:
-  - Legitimate administrative scripts or software installation creating tasks.
+  - Legitimate scheduled task creation
 level: medium
 tags:
-  - attack.t1053.005
+  - attack.persistence
+  - attack.t1053
 references:
-  - https://attack.mitre.org/techniques/T1053/005/
+  - https://attack.mitre.org/techniques/T1053/
